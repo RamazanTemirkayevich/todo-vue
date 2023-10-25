@@ -1,12 +1,9 @@
 <template>
     <h1>Your Notes 🗒️</h1>
     <AddModal 
-        v-bind:notes="notes"
+        @note-added="addNote"
     />
     <div class="line"></div>
-    <!-- <AddNote 
-        @add-note="addNote"
-    /> -->
     <NotesList
         v-if="notes.length"
         v-bind:notes="notes"
@@ -18,7 +15,6 @@
 <script>
 import NotesList from '@/components/NotesList'
 import AddModal from '@/components/AddModal'
-// import AddNote from '@/components/AddNote.vue'
 
 export default {
     name: 'app',

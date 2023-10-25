@@ -26,7 +26,6 @@ export default {
             type: Object,
             required: true,
         }
-        ['notes']
     },
     data() {
         return { 
@@ -42,7 +41,7 @@ export default {
             this.open = false
         },
         addNote(note) {
-            this.notes.push(note)
+            this.$emit('note-added', note)
         }
     }
 }
