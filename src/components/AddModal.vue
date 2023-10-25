@@ -1,0 +1,49 @@
+<template>
+    <button 
+        @click="open = true"
+        class="btn btn--regular"
+    >
+        + Add Note
+    </button>
+
+    <div v-if="open" class="modal">
+        <p>Add your new Note</p>
+        <AddNote
+            :notes="notes"
+            @close-md="closeModal"
+            @add-note="addNote"
+            v-bind:note="note"
+        />
+    </div>
+</template>
+
+<script>
+import AddNote from './AddNote.vue'
+
+export default {
+    props: {
+        note: {
+            type: Object,
+            required: true,
+        }
+        ['notes']
+    },
+    data() {
+        return { 
+            notes: [],
+            open: false,
+        }
+    },
+    components: {
+        AddNote
+    },
+    methods: {
+        closeModal() {
+            this.open = false
+        },
+        addNote(note) {
+            this.notes.push(note)
+        }
+    }
+}
+</script>

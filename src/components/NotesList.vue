@@ -2,7 +2,11 @@
     <ul class="notes-list">
         <NotesItem
             v-for="note in notes"
-            v-bind:note="note"
+            :key="note.id"
+            :note="note"
+            @remove-note="rmNote"
+            @add-note="addNote"
+
         />
     </ul>
 </template>
@@ -14,6 +18,14 @@ export default {
     props: ['notes'],
     components: {
         NotesItem
+    },
+    methods: {
+        rmNote(id) {
+            this.$emit('remove-note', id)
+        },
+        addNote(note) {
+            this.notes.push(note)
+        },
     }
 }
 </script>
