@@ -1,11 +1,4 @@
 <template>
-    <button 
-        @click="open = true"
-        class="open-modal"
-    >
-        <span></span>
-    </button>
-
     <div v-if="open" class="modal">
         <p>Do you want to Delete note</p>
         <div class="modal-buttons">
@@ -41,51 +34,15 @@ export default {
         rmNote () {
             this.$emit('remove-note', this.note.id)
             this.open = false
+        },
+        openMd() {
+            this.$emit('open-md')
         }
     }
 }
 </script>
 
 <style>
-.open-modal {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 20px;
-    height: 1px;
-    
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.open-modal::after,
-.open-modal::before,
-.open-modal span {
-    position: absolute;
-
-    content: '';
-
-    top: 0;
-
-    width: 4px;
-    height: 4px;
-
-    background-color: gray;
-    border-radius: 50%;
-}
-
-.open-modal::after {
-    right: 0;
-}
-
-.open-modal::before {
-    left: 0;
-}
-
 .modal {
     position: fixed;
 

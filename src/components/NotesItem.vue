@@ -5,9 +5,9 @@
             {{ note.title }}
         </span>
         <div 
-            class="notes-remove"
+            class="notes-settings"
         >
-            <rmModal 
+            <Options 
                 v-bind:note="note"
                 @remove-note="rmNote"
             />
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import rmModal from './rmModal.vue'
+import Options from './Options.vue'
 
 export default {
     props: {
@@ -26,7 +26,7 @@ export default {
         }
     },
     components: {
-        rmModal
+        Options
     },
     methods: {
         rmNote() {
@@ -48,8 +48,9 @@ export default {
     font-weight: bold;
 }
 
-.notes-remove {
-    margin-top: 15px;
+.notes-settings {
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: center;
