@@ -3,16 +3,6 @@
         <input type="text" v-model="title">
         <div class="modal-buttons">
             <button type="submit" class="btn btn--regular"
-                @click="
-                    $refs.alert.showAlert(
-                        'success', // There are 4 types of alert: success, info, warning, error
-                        'Your note added to list.', // Message of the alert
-                        'Success', // Header of the alert
-                        { iconSize: 35, // Size of the icon (px)
-                        iconType: 'solid', // Icon styles: now only 2 styles 'solid' and 'regular'
-                        position: 'top left' } // Position of the alert 'top right', 'top left', 'bottom left', 'bottom right'
-                    )
-                "
             >
                 Add
             </button>
@@ -21,37 +11,28 @@
             >
                 Close
             </button>
-            <vue-basic-alert 
-                :duration="300"
-                :closeIn="3000"
-                ref="alert" />
         </div>
     </form>
 </template>
 
 <script>
-import VueBasicAlert from 'vue-basic-alert'
-
 export default {
-    props: ['notes'],
+    props: ['todos'],
     data() {
         return {
             title: '',
             open: false,
         }
     },
-    components: {
-        VueBasicAlert
-    },
     methods: {
         onSubmit() {
             if (this.title.trim()) {
-                const newNote = {
+                const newTodo = {
                     id: Date.now(),
                     title: this.title,
                 }
 
-                this.$emit('add-note', newNote)
+                this.$emit('add-todo', newTodo)
                 this.title = ''
             }
         },

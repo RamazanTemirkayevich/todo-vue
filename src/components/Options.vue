@@ -1,31 +1,31 @@
 <template>
     <button 
         class="open-modal"
-        @click="openMd"
+        @click="open = !open"
     >
         <span></span>
     </button>
 
-    <div v-if="open" class="settings">
+    <div v-if="open" v-show="open" class="settings">
         <ul>
-            <li
-            
-            >
-                Change
+            <li>
+                <router-link to="/todos">
+                    Change
+                </router-link>
             </li>
             <li
                 @click="opened = true"
             >
-                <Warning 
-                    @remove-note="rmNote"
-                />
                 Delete
             </li>
         </ul>
 
         <Teleport to="body">
             <div v-if="opened" class="modal">
-                <p>Do you want to Delete note</p>
+                <p>
+                    Do you want to Delete note?
+                    <span>"{{ note.title }}"</span>
+                </p>
                 <div class="modal-buttons">
                     <button class="modal-close-btn btn btn--regular"
                         @click="opened = false"
@@ -33,7 +33,7 @@
                         Close
                     </button>
                     <button class="modal-rm-btn btn btn--red"
-                        @click="rmNote"
+                        v-on:click="$emit('remove-note', note.id)"
                     >
                         Delete
                     </button>
@@ -41,27 +41,9 @@
             </div>
         </Teleport>
     </div>
-
-    <!-- <div v-if="open" class="modal">
-        <p>Do you want to Delete note</p>
-        <div class="modal-buttons">
-            <button class="modal-close-btn btn btn--regular"
-                @click="open = false"
-            >
-                Close
-            </button>
-            <button class="modal-rm-btn btn btn--red"
-                @click="rmNote"
-            >
-                Delete
-            </button>
-        </div>
-    </div> -->
 </template>
 
 <script>
-import Warning from './Warning.vue'
-
 export default {
     props: {
         note: {
@@ -76,15 +58,13 @@ export default {
             rm: false
         }
     },
-    components: {
-        Warning
-    },
     methods: {
         rmNote() {
             this.$emit('remove-note', this.note.id)
         },
         openMd() {
-            this.open = !this.open
+            //this.open = !this.open
+            this.open = true
             this.$emit('open-md')
         }
     }
@@ -93,7 +73,7 @@ export default {
 
 <style>
 .open-modal {
-    margin: 15px auto;
+    margin: 20px auto;
 
     position: relative;
 
@@ -101,6 +81,7 @@ export default {
     align-items: center;
     justify-content: center;
 
+    padding: 10px 0;
     width: 20px;
     height: 1px;
     
@@ -164,6 +145,7 @@ export default {
 
     font-size: 18px;
     font-weight: 300;
+    cursor: pointer;
 }
 
 .settings ul li::after {
@@ -180,6 +162,9 @@ export default {
     background-color: #d3d3d3;
 }
 
+.settings ul li:hover {
+    color: #0BA5EC;
+}
 .settings ul li:last-child::after {
     display: none;
 }
@@ -205,10 +190,56 @@ export default {
     filter: drop-shadow(1.3026548624038696px 14.329203605651855px 65.13274383544922px rgba(0, 0, 0, 0.56));
 }
 
+.modal p {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    font-weight: 900;
+}
+
+.modal p span {
+    position: relative;
+    margin-top: 15px;
+
+    font-size: 18px;
+    font-weight: 400;
+
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.modal p span::after {
+    position: absolute;
+
+    content: '';
+
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 70%;
+    height: 2px;
+
+    background-color: #d3d3d3;
+    border-radius: 10px;
+}
+
 .modal-buttons {
     display: flex;
     align-items: center;
 
     gap: 17px;
+}
+
+.modal-buttons button {
+    margin: unset;
+
+    padding: 26px 42px;
 }
 </style>

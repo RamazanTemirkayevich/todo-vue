@@ -1,6 +1,6 @@
 <template>
     <div v-if="open" class="modal">
-        <p>Do you want to Delete note</p>
+        <p>Do you want to Delete note ?</p>
         <div class="modal-buttons">
             <button class="modal-close-btn btn btn--regular"
                 @click="open = false"

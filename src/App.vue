@@ -20,7 +20,8 @@ export default {
     name: 'app',
     data() {
         return { 
-            notes: []
+            notes: [],
+            todos: []
         }
     },
     components: {
@@ -32,6 +33,9 @@ export default {
         rmNote(id) {
             this.notes = this.notes.filter(t => t.id !== id)
         },
+        removeTodo(id) {
+            this.todos = this.todos.filter(t => t.id !== id)
+        },
         addNote(note) {
             this.notes.push(note)
         }
@@ -40,14 +44,24 @@ export default {
 </script>
 
 <style>
-#app {
+#app, body {
     padding: 0 10px;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #1D2939;
-    margin-top: 60px;
+    margin-top: 20px;
+}
+
+#app {
+    margin: 0px auto;
+    max-width: 1000px;
+
+    padding: 20px 20px 250px;
+
+    background-color: #E4E7EC;
+    border-radius: 15px;
 }
 
 * {
@@ -70,7 +84,7 @@ button {
     height: 2px;
 
     border-radius: 3px;
-    background-color: #E4E7EC;
+    background-color: #FCFCFD;
 }
 
 .btn {

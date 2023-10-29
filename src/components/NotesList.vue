@@ -1,9 +1,10 @@
 <template>
     <ul class="notes-list">
         <NotesItem
-            v-for="note in notes"
+            v-for="(note, i) in notes"
             :key="note.id"
             :note="note"
+            v-bind:index="i"
             @remove-note="rmNote"
             @add-note="addNote"
 
@@ -12,7 +13,7 @@
 </template>
 
 <script>
-import NotesItem from './NotesItem.vue'
+import NotesItem from '@/components/NotesItem.vue'
 
 export default {
     props: ['notes'],

@@ -1,22 +1,24 @@
 <template>
     <li class="notes-item">
-        
-        <span class="notes-title">
-            {{ note.title }}
-        </span>
+        <router-link to="/todos">
+            <span class="notes-title">
+                {{ note.title }}
+            </span>
+        </router-link>
         <div 
             class="notes-settings"
         >
             <Options 
                 v-bind:note="note"
-                @remove-note="rmNote"
+                v-on:remove-note="rmNote"
             />
         </div>
     </li>
+    <router-view />
 </template>
 
 <script>
-import Options from './Options.vue'
+import Options from '@/components/Options.vue'
 
 export default {
     props: {
@@ -29,8 +31,8 @@ export default {
         Options
     },
     methods: {
-        rmNote() {
-            this.$emit('remove-note', this.note.id)
+        rmNote(id) {
+            this.$emit('remove-note', id)
         }
     }
 }
