@@ -64,6 +64,10 @@ export default {
     filter: drop-shadow(1.3026548624038696px 14.329203605651855px 65.13274383544922px rgba(0, 0, 0, 0.56));
 }
 
+.modal p {
+    margin-bottom: 15px;
+}
+
 .modal-buttons {
     display: flex;
     align-items: center;

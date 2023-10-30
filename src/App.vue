@@ -1,47 +1,7 @@
 <template>
     <h1>Your Notes 🗒️</h1>
-    <AddModal 
-        @note-added="addNote"
-    />
-    <div class="line"></div>
-    <NotesList
-        v-if="notes.length"
-        v-bind:notes="notes"
-        @remove-note="rmNote"
-    />
-    <p v-else>Create a new Note ✍️</p>
+    <router-view />
 </template>
-
-<script>
-import NotesList from '@/components/NotesList'
-import AddModal from '@/components/AddModal'
-
-export default {
-    name: 'app',
-    data() {
-        return { 
-            notes: [],
-            todos: []
-        }
-    },
-    components: {
-        NotesList,
-        AddModal,
-        // AddNote
-    },
-    methods: {
-        rmNote(id) {
-            this.notes = this.notes.filter(t => t.id !== id)
-        },
-        removeTodo(id) {
-            this.todos = this.todos.filter(t => t.id !== id)
-        },
-        addNote(note) {
-            this.notes.push(note)
-        }
-    }
-}
-</script>
 
 <style>
 #app, body {
@@ -67,56 +27,26 @@ export default {
 * {
     list-style: none;
     text-decoration: none;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
     text-transform: uppercase;
 }
 
-button {
-    margin: 30px auto 20px auto;
-}
-
-.line {
-    margin-bottom: 15px;
-
-    width: 100%;
-    height: 2px;
-
-    border-radius: 3px;
-    background-color: #FCFCFD;
-}
-
-.btn {
+a {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 8px 22px;
+    padding: 10px 15px;
 
-    height: 47px;
+    background-color: #FCFCFD;
+    border-radius: 12px;
 
-    font-size: 16px;
-    font-weight: bold;
-    white-space: nowrap;
-
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.btn.btn--red {
-    color: #FCFCFD;
-    background-color: #F97066;
-}
-
-.btn.btn--regular {
-    color: #0BA5EC;
-    background-color: #F2F4F7;
-}
-
-p {
     font-size: 20px;
     font-weight: 500;
+    color: #0BA5EC;
 }
 </style>

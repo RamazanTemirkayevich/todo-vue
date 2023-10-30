@@ -3,7 +3,7 @@
         <NotesItem
             v-for="(note, i) in notes"
             :key="note.id"
-            :note="note"
+            v-bind:note="note"
             v-bind:index="i"
             @remove-note="rmNote"
             @add-note="addNote"

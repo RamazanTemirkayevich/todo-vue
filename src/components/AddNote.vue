@@ -11,7 +11,8 @@
                         { iconSize: 35, // Size of the icon (px)
                         iconType: 'solid', // Icon styles: now only 2 styles 'solid' and 'regular'
                         position: 'top left' } // Position of the alert 'top right', 'top left', 'bottom left', 'bottom right'
-                    )
+                    ),
+                    closeMd
                 "
             >
                 Add

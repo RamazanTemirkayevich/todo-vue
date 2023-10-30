@@ -1,43 +1,29 @@
 <template>
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="onSubmitTodo">
         <input type="text" v-model="title">
-        <div class="modal-buttons">
-            <button type="submit" class="btn btn--regular"
-            >
-                Add
-            </button>
-            <button class="modal-close-btn btn btn--red"
-                @click="closeMd"
-            >
-                Close
-            </button>
-        </div>
+        <button type="submit" class="btn btn--regular">Create</button>
     </form>
 </template>
 
 <script>
 export default {
-    props: ['todos'],
     data() {
         return {
-            title: '',
-            open: false,
+            title: ''
         }
     },
     methods: {
-        onSubmit() {
+        onSubmitTodo() {
             if (this.title.trim()) {
                 const newTodo = {
                     id: Date.now(),
                     title: this.title,
+                    completed: false
                 }
 
                 this.$emit('add-todo', newTodo)
                 this.title = ''
             }
-        },
-        closeMd() {
-            this.$emit('close-md')
         }
     }
 }
@@ -46,7 +32,6 @@ export default {
 <style scoped>
     form {
         display: flex;
-        flex-direction: column;
         align-items: center;
 
         gap: 8px;
@@ -61,19 +46,13 @@ export default {
 
         border: 2px solid #E4E7EC;
         border-radius: 8px;
-
-        margin-bottom: 15px;
     }
 
     input[type="text"] {
         font-size: 18px;
     }
 
-    .modal-buttons {
-        flex-direction: row-reverse;
-    }
-
-    .modal-buttons button {
+    form button {
         margin: unset;
     }
 </style>

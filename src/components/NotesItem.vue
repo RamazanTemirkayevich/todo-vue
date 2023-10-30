@@ -1,9 +1,11 @@
 <template>
     <li class="notes-item">
-        <router-link to="/todos">
-            <span class="notes-title">
-                {{ note.title }}
-            </span>
+        <router-link to="/todos" class="notes-title"
+            :key="note.id"
+            v-bind:note="note"
+            v-bind:index="i"
+        >
+            {{ note.title }}
         </router-link>
         <div 
             class="notes-settings"
@@ -14,7 +16,6 @@
             />
         </div>
     </li>
-    <router-view />
 </template>
 
 <script>
@@ -66,6 +67,6 @@ export default {
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
     text-align: start;
-    width: 85%;
+    width: 77%;
 }
 </style>

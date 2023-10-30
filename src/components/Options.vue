@@ -201,6 +201,7 @@ export default {
     width: 100%;
 
     font-weight: 900;
+    margin-bottom: 15px;
 }
 
 .modal p span {
