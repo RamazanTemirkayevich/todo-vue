@@ -14,7 +14,7 @@
                 @close-md="closeModal"
                 @add-note="addNote"
                 v-bind:note="note"
-                @save-note="persist"
+                @save-note="saveNote"
                 :is="title"
             />
         </KeepAlive>
@@ -47,7 +47,7 @@ export default {
         addNote(note) {
             this.$emit('note-added', note)
         },
-        persist() {
+        saveNote() {
             this.$emit('save-note')
         }
     }

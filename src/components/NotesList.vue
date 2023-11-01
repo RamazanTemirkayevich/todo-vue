@@ -8,7 +8,7 @@
                 v-bind:index="i"
                 @remove-note="rmNote"
                 @add-note="addNote"
-                @save-note="persist"
+                @save-note="saveNote"
             />
         </keep-alive>
     </ul>
@@ -23,15 +23,26 @@ export default {
     components: {
         NotesItem
     },
+    mounted() {
+        if(localStorage.getItem('notes')) {
+            try {
+                this.notes = JSON.parse(localStorage.getItem('notes'));
+            } catch(e) {
+                localStorage.removeItem('notes');
+            }
+        }
+    },
     methods: {
         rmNote(id) {
             this.$emit('remove-note', id)
         },
         addNote(note) {
             this.notes.push(note)
+            this.saveNote()
         },
-        persist() {
-            localStorage.title = this.title;
+        saveNote() {
+            let parsed = JSON.stringify(this.notes);
+            localStorage.setItem('notes', parsed);
         }
     }
 }

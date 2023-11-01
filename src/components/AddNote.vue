@@ -43,11 +43,6 @@ export default {
     components: {
         VueBasicAlert
     },
-    mounted() {
-        if (localStorage.title) {
-            this.title = localStorage.title;
-        }
-    },
     methods: {
         onSubmit() {
             if (this.title.trim()) {
@@ -63,7 +58,10 @@ export default {
         closeMd() {
             this.$emit('close-md')
         },
-        persist() {
+        saveNote() {
+            if(!this.title) return;
+            this.notes.push(this.title);
+            this.title = '';
             this.$emit('save-note')
         }
     }
