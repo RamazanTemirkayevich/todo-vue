@@ -1,19 +1,22 @@
 <template>
     <ul class="notes-list">
-        <NotesItem
-            v-for="(note, i) in notes"
-            :key="note.id"
-            v-bind:note="note"
-            v-bind:index="i"
-            @remove-note="rmNote"
-            @add-note="addNote"
-
-        />
+        <keep-alive>
+            <NotesItem
+                v-for="(note, i) in notes"
+                :key="note.id"
+                v-bind:note="note"
+                v-bind:index="i"
+                @remove-note="rmNote"
+                @add-note="addNote"
+                @save-note="persist"
+            />
+        </keep-alive>
     </ul>
 </template>
 
 <script>
 import NotesItem from '@/components/NotesItem.vue'
+import { storeToRefs } from "pinia"
 
 export default {
     props: ['notes'],
@@ -27,6 +30,9 @@ export default {
         addNote(note) {
             this.notes.push(note)
         },
+        persist() {
+            localStorage.title = this.title;
+        }
     }
 }
 </script>

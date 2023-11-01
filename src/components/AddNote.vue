@@ -11,8 +11,7 @@
                         { iconSize: 35, // Size of the icon (px)
                         iconType: 'solid', // Icon styles: now only 2 styles 'solid' and 'regular'
                         position: 'top left' } // Position of the alert 'top right', 'top left', 'bottom left', 'bottom right'
-                    ),
-                    closeMd
+                    )
                 "
             >
                 Add
@@ -44,6 +43,11 @@ export default {
     components: {
         VueBasicAlert
     },
+    mounted() {
+        if (localStorage.title) {
+            this.title = localStorage.title;
+        }
+    },
     methods: {
         onSubmit() {
             if (this.title.trim()) {
@@ -58,6 +62,9 @@ export default {
         },
         closeMd() {
             this.$emit('close-md')
+        },
+        persist() {
+            this.$emit('save-note')
         }
     }
 }

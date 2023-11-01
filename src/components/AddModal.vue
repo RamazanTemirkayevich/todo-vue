@@ -8,12 +8,16 @@
 
     <div v-if="open" class="modal">
         <p>Add your new Note</p>
-        <AddNote
-            :notes="notes"
-            @close-md="closeModal"
-            @add-note="addNote"
-            v-bind:note="note"
-        />
+        <KeepAlive>
+            <AddNote
+                :notes="notes"
+                @close-md="closeModal"
+                @add-note="addNote"
+                v-bind:note="note"
+                @save-note="persist"
+                :is="title"
+            />
+        </KeepAlive>
     </div>
 </template>
 
@@ -42,6 +46,9 @@ export default {
         },
         addNote(note) {
             this.$emit('note-added', note)
+        },
+        persist() {
+            this.$emit('save-note')
         }
     }
 }

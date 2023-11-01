@@ -6,7 +6,11 @@
         <span></span>
     </button>
 
-    <div v-if="open" v-show="open" class="settings">
+    <div 
+        class="settings"
+        v-if="open" 
+        v-show="open"
+    > 
         <ul>
             <li>
                 <router-link to="/todos">
