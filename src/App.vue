@@ -1,27 +1,36 @@
 <template>
-    <h1>Your Notes 🗒️</h1>
+    <a href="/" class="logo">
+        <img src="@/assets/Logo.svg" alt="">
+    </a>
     <router-view />
 </template>
 
 <style>
 #app, body {
-    padding: 0 10px;
+    padding: 0 15px;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #1D2939;
-    margin-top: 20px;
+    color: var(--black);
+    margin-top: 15px;
 }
 
 #app {
     margin: 0px auto;
-    max-width: 1000px;
 
-    padding: 20px 20px 250px;
+    max-width: 345px;
 
-    background-color: #E4E7EC;
-    border-radius: 15px;
+    padding: 20px 20px 100px;
+
+    height: 547px;
+
+    background-color: var(--gray-300);
+    border-radius: var(--br--20);
+}
+
+body {
+    background: linear-gradient(90deg, #89F7FE 0%, #66A6FF 100%);
 }
 
 * {
@@ -35,18 +44,58 @@ h1 {
     text-transform: uppercase;
 }
 
-a {
+input {    
+    outline: none;
+    background: none;
+    border: none;
+}
+
+input[type="text"] {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.logo {
+    margin: auto;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 128px;
+}
 
-    padding: 10px 15px;
+.logo img {
+    width: 100%;
+}
 
-    background-color: #FCFCFD;
-    border-radius: 12px;
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+select:focus, textarea:focus, input:focus {
+        font-size: 16px;
+    }
+}
 
-    font-size: 20px;
-    font-weight: 500;
-    color: #0BA5EC;
+:root {
+    --black: #1D2939;
+    --white: #FFFFFF;
+
+    --primary: #1570EF;
+    --primary-600: #D6E7FF;;
+
+    --gray-200: #BFC3CA;
+    --gray-300: #F8F8F8;
+    --gray-400: #A9A9A9;
+    --gray-500: #FCFCFD;
+    --gray-600: #A3A6AB;
+
+    --red: #F97066;
+
+    /*  */
+    --br--5: 5px;
+    --br--7: 7px;
+    --br--8: 8px;
+    --br--10: 10px;
+    --br--10: 13px;
+    --br--15: 15px;
+    --br--20: 20px;
+    --br--25: 25px;
 }
 </style>

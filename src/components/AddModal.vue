@@ -1,23 +1,14 @@
 <template>
-    <button 
-        @click="open = true"
-        class="btn btn--regular"
-    >
-        + Add Note
-    </button>
-
-    <div v-if="open" class="modal">
+    <div  class="modal">
         <p>Add your new Note</p>
-        <KeepAlive>
-            <AddNote
-                :notes="notes"
-                @close-md="closeModal"
-                @add-note="addNote"
-                v-bind:note="note"
-                @save-note="saveNote"
-                :is="title"
-            />
-        </KeepAlive>
+        <AddNote
+            :notes="notes"
+            @close-md="closeModal"
+            @add-note="addNote"
+            v-bind:note="note"
+            @save-note="saveNote"
+            :is="title"
+        />
     </div>
 </template>
 
@@ -33,8 +24,7 @@ export default {
     },
     data() {
         return { 
-            notes: [],
-            open: false,
+            notes: []
         }
     },
     components: {
@@ -42,7 +32,7 @@ export default {
     },
     methods: {
         closeModal() {
-            this.open = false
+            this.$emit('close-md')
         },
         addNote(note) {
             this.$emit('note-added', note)
@@ -53,3 +43,16 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.btn--add {
+    margin-bottom: 50px;
+    padding: 8px 44px;
+    height: 53px;
+}
+
+.btn--add.bottom {
+    position: absolute;
+    bottom: 0;
+}
+</style>

@@ -42,13 +42,16 @@ export default {
 <style scoped>
 .notes-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
 
-    width: 100%;
+    padding: 15px;
 
-    font-size: 25px;
-    font-weight: bold;
+    width: 90%;
+
+    border-radius: var(--br--10);
+    background-color: var(--white);
+    box-shadow: 15px 15px 90px 0px rgba(0, 0, 0, 0.12);
 }
 
 .notes-settings {
@@ -57,16 +60,29 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    padding: 0 5px;
+
+    height: 32px;
+
+    border: 1px solid var(--gray-400);
+    border-radius: var(--br--7);
 }
 
 .notes-title {
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    word-break: break-word;
-    overflow: hidden;
+    text-align: start;
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
-    text-align: start;
+    
     width: 77%;
+    
+    word-break: break-word;
+    overflow: hidden;
+
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--black);
 }
 </style>

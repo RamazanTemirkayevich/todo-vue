@@ -77,17 +77,14 @@ export default {
 
 <style>
 .open-modal {
-    margin: 20px auto;
-
     position: relative;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 10px 0;
     width: 20px;
-    height: 1px;
+    height: 4px;
     
     background: none;
     border: none;
@@ -206,6 +203,7 @@ export default {
 
     font-weight: 900;
     margin-bottom: 15px;
+    color: var(--black);
 }
 
 .modal p span {

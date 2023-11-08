@@ -1,6 +1,5 @@
 <template>
     <div class="notes-todo">
-        <router-link to="/">Back to Home Page</router-link>
         <h2> Note </h2>
         <AddTodo 
             :todos="todos"
@@ -8,16 +7,22 @@
             v-bind:todo="todo"
         />
         <div class="line"></div>
-        <ul class="notes-todo-list"
-            @remove-todo="removeTodo"
-        >
-            <NotesTodo
-                v-for="(todo, i) of todos"
-                v-bind:todo="todo"
-                v-bind:index="i"
-                v-on:remove-todo="removeTodo"
-            />
-        </ul>
+        <div class="notes-todo-container">
+            <ul class="notes-todo-list"
+                @remove-todo="removeTodo"
+            >
+                <NotesTodo
+                    v-for="(todo, i) of todos"
+                    v-bind:todo="todo"
+                    v-bind:index="i"
+                    v-on:remove-todo="removeTodo"
+                />
+            </ul>
+        </div>
+        <router-link to="/" class="btn btn--light back-btn">
+            <img src="@/assets/logout.svg" alt="">
+            Back
+        </router-link>
     </div>
 </template>
 
@@ -56,14 +61,57 @@ export default {
 </script>
 
 <style scoped>
-.notes-todo a {
-    margin: 25px 0;
+.notes-todo {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    height: 99%;
 }
+
+.notes-todo h2 {
+    margin: 20px 0;
+
+    font-size: 28px;
+}
+
+.back-btn {
+    margin: 15px auto auto;
+}
+
+.notes-todo-container {
+    position: relative;
+
+    width: 100%;
+    height: 340px;
+}
+
+.notes-todo-container::after {
+    position: absolute;
+
+    content: '';
+
+    left: 0;
+    bottom: -1px;
+
+    width: 100%;
+    height: 43px;
+
+    background: linear-gradient(180deg, #f8f8f8 -0.32%, rgba(217, 217, 217, 0.00) 100%);
+    transform: rotate(-179.948deg);
+}
+
 
 .notes-todo-list {
     display: flex;
     flex-direction: column;
 
     gap: 10px;
+
+    height: 100%;
+
+    overflow: scroll;
 }
 </style>
