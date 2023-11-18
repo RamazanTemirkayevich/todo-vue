@@ -26,21 +26,23 @@
 
         <Teleport to="body">
             <div v-if="opened" class="modal">
-                <p>
-                    Do you want to Delete note?
-                    <span>"{{ note.title }}"</span>
-                </p>
-                <div class="modal-buttons">
-                    <button class="modal-close-btn btn btn--regular"
-                        @click="opened = false"
-                    >
-                        Close
-                    </button>
-                    <button class="modal-rm-btn btn btn--red"
-                        v-on:click="$emit('remove-note', note.id)"
-                    >
-                        Delete
-                    </button>
+                <div class="modal-box">
+                    <p>
+                        Do you want to Delete note?
+                        <span>"{{ note.title }}"</span>
+                    </p>
+                    <div class="modal-buttons">
+                        <button class="modal-close-btn btn btn--regular"
+                            @click="opened = false"
+                        >
+                            Close
+                        </button>
+                        <button class="modal-rm-btn btn btn--red"
+                            v-on:click="$emit('remove-note', note.id)"
+                        >
+                            Delete
+                        </button>
+                    </div>
                 </div>
             </div>
         </Teleport>
@@ -176,22 +178,34 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(109, 109, 109, 0.41);
+    z-index: 20;
+}
+
+.modal-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
 
-    z-index: 999;
-    top: 20%;
-    left: 50%;
-    width: 290px;
-    margin-left: -170px;
+    width: 75%;
 
     padding: 25px;
 
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: 18px;
     filter: drop-shadow(1.3026548624038696px 14.329203605651855px 65.13274383544922px rgba(0, 0, 0, 0.56));
+    z-index: 999;
 }
 
-.modal p {
+.modal-box p {
     position: relative;
 
     display: flex;
@@ -206,7 +220,7 @@ export default {
     color: var(--black);
 }
 
-.modal p span {
+.modal-box p span {
     position: relative;
     margin-top: 15px;
 
@@ -217,7 +231,7 @@ export default {
     word-wrap: break-word;
 }
 
-.modal p span::after {
+.modal-box p span::after {
     position: absolute;
 
     content: '';

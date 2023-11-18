@@ -1,17 +1,19 @@
 <template>
-    <div v-if="open" class="modal">
-        <p>Do you want to Delete note ?</p>
-        <div class="modal-buttons">
-            <button class="modal-close-btn btn btn--regular"
-                @click="open = false"
-            >
-                Close
-            </button>
-            <button class="modal-rm-btn btn btn--red"
-                @click="rmNote"
-            >
-                Delete
-            </button>
+    <div class="modal">
+        <div v-if="open" class="modal-box">
+            <p>Do you want to Delete note ?</p>
+            <div class="modal-buttons">
+                <button class="modal-close-btn btn btn--regular"
+                    @click="open = false"
+                >
+                    Close
+                </button>
+                <button class="modal-rm-btn btn btn--red"
+                    @click="rmNote"
+                >
+                    Delete
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -49,6 +51,19 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(109, 109, 109, 0.41);
+}
+
+.modal-box {
+    position: fixed;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
 
     z-index: 999;
@@ -64,7 +79,7 @@ export default {
     filter: drop-shadow(1.3026548624038696px 14.329203605651855px 65.13274383544922px rgba(0, 0, 0, 0.56));
 }
 
-.modal p {
+.modal-box p {
     margin-bottom: 15px;
 }
 

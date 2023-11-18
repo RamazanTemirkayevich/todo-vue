@@ -38,6 +38,7 @@ export default {
         return {
             title: '',
             open: false,
+            edit: false
         }
     },
     components: {
@@ -49,6 +50,7 @@ export default {
                 const newNote = {
                     id: Date.now(),
                     title: this.title,
+                    edit: false
                 }
 
                 this.$emit('add-note', newNote)

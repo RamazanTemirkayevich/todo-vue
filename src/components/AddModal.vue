@@ -1,14 +1,16 @@
 <template>
-    <div  class="modal">
-        <p>Add your new Note</p>
-        <AddNote
-            :notes="notes"
-            @close-md="closeModal"
-            @add-note="addNote"
-            v-bind:note="note"
-            @save-note="saveNote"
-            :is="title"
-        />
+    <div class="modal">
+        <div  class="modal-box">
+            <p>Add your new Note</p>
+            <AddNote
+                :notes="notes"
+                @close-md="closeModal"
+                @add-note="addNote"
+                v-bind:note="note"
+                @save-note="saveNote"
+                :is="title"
+            />
+        </div>
     </div>
 </template>
 

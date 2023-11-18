@@ -1,10 +1,23 @@
 <template>
     <div class="notes-todo">
-        <h2> Note </h2>
+        <h2>Note</h2>
+        <!-- <div class="notes-todo-title">
+            <input
+                v-if="note.edit"
+                v-model="note.title"
+                @blur="note.edit = false; $emit('update')"
+                @keyup.enter="note.edit=false; $emit('update')"
+                v-focus
+            >
+            <div v-else>
+                <label @click="note.edit = true;"> Name of Note </label>
+            </div>
+        </div> -->
         <AddTodo 
             :todos="todos"
             @add-todo="addTodo"
             v-bind:todo="todo"
+
         />
         <div class="line"></div>
         <div class="notes-todo-container">
@@ -19,16 +32,30 @@
                 />
             </ul>
         </div>
-        <router-link to="/" class="btn btn--light back-btn">
-            <img src="@/assets/logout.svg" alt="">
-            Back
-        </router-link>
+        <div class="notes-todo-actions">
+            <router-link to="/" class="btn btn--light back-btn">
+                <img src="@/assets/logout.svg" alt="">
+                Back
+            </router-link>
+            <button 
+                class='btn modal-rm-btn btn--red' 
+                @remove-todo="removeTodo"
+            >
+                Delete
+            </button>
+            <!-- <button class="modal-rm-btn btn btn--red"
+                @remove-note="rmNote"
+            >   
+                Delete
+            </button> -->
+        </div>
     </div>
 </template>
 
 <script>
 import NotesTodo from '@/components/NotesTodo.vue'
 import AddTodo from '@/components/AddTodo.vue'
+import { SvgSprite } from 'vue-svg-sprite'
 
 export default {
     props: {
@@ -39,12 +66,14 @@ export default {
     },
     data() {
         return {
-            todos: []
+            todos: [],
+            notes: []
         }
     },
     components: {
         NotesTodo,
-        AddTodo
+        AddTodo,
+        SvgSprite
     },
     methods: {
         removeTodo(id) {
@@ -52,9 +81,13 @@ export default {
         },
         removeTodo(id) {
             this.todos = this.todos.filter(t => t.id !== id)
+            this.$router.push('/todos')
         },
         addTodo(todo) {
             this.todos.push(todo)
+        },
+        rmNote(id) {
+            this.$emit('remove-note', id)
         }
     }
 }
@@ -77,10 +110,6 @@ export default {
     font-size: 28px;
 }
 
-.back-btn {
-    margin: 15px auto auto;
-}
-
 .notes-todo-container {
     position: relative;
 
@@ -101,6 +130,18 @@ export default {
 
     background: linear-gradient(180deg, #f8f8f8 -0.32%, rgba(217, 217, 217, 0.00) 100%);
     transform: rotate(-179.948deg);
+}
+
+.notes-todo-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+.notes-todo-actions .btn--red .delete-ico path {
+    background-color: var(--red);
 }
 
 

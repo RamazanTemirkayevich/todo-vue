@@ -1,15 +1,15 @@
 <template>
+    <AddModal 
+        @note-added="addNote"
+        @close-md="closeModal"
+        :notes="notes"
+        v-if="open"
+    />
     <div class="notes"
         v-bind:class="classObject"
     >
-        <AddModal 
-            @note-added="addNote"
-            @close-md="closeModal"
-            :notes="notes"
-            v-if="open"
-        />
         <NotesList
-            v-else-if="notes.length"
+            v-if="notes.length"
             v-bind:notes="notes"
             @remove-note="rmNote"
             v-on:change="notes = !notes"
@@ -63,6 +63,7 @@ export default {
     methods: {
         rmNote(id) {
             this.notes = this.notes.filter(t => t.id !== id)
+            this.$router.push('/todos')
         },
         addNote(note) {
             this.notes.push(note)

@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="onSubmitTodo">
-        <input type="text" v-model="title">
+        <input type="text" placeholder="Create a Todo" v-model="title">
         <button type="submit" class="btn btn--regular">Create</button>
     </form>
 </template>
@@ -18,7 +18,8 @@ export default {
                 const newTodo = {
                     id: Date.now(),
                     title: this.title,
-                    completed: false
+                    completed: false,
+                    edit: false
                 }
 
                 this.$emit('add-todo', newTodo)
@@ -48,8 +49,10 @@ export default {
         border-radius: 8px;
     }
 
-    input[type="text"] {
+    input[type="text"],
+    input::placeholder {
         font-size: 18px;
+        font-weight: 500;
     }
 
     form button {

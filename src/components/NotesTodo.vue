@@ -98,6 +98,7 @@ span, div {
     margin-left: 7px;
 
     width: 84%;
+    overflow: auto;
 }
 
 .todo-checkbox {
