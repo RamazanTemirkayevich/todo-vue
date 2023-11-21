@@ -3,9 +3,8 @@
         <router-link to="/todos" class="notes-title"
             :key="note.id"
             v-bind:note="note"
-            v-bind:notes="notes"
             v-bind:index="i"
-            @remove-note="rmNote"
+            v-on:remove-note="rmNote"
         >
             {{ note.title }}
         </router-link>

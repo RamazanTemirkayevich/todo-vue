@@ -17,7 +17,6 @@
             :todos="todos"
             @add-todo="addTodo"
             v-bind:todo="todo"
-
         />
         <div class="line"></div>
         <div class="notes-todo-container">
@@ -39,7 +38,7 @@
             </router-link>
             <button 
                 class='btn modal-rm-btn btn--red' 
-                @remove-todo="removeTodo"
+                v-on:click="$emit('remove-note', note.id)"
             >
                 Delete
             </button>
@@ -75,19 +74,34 @@ export default {
         AddTodo,
         SvgSprite
     },
+    mounted() {
+        if(localStorage.getItem('todos')) {
+            try {
+                this.todos = JSON.parse(localStorage.getItem('todos'));
+                } catch(e) {
+                localStorage.removeItem('todos');
+            }
+        }
+    },
     methods: {
-        removeTodo(id) {
-            this.$emit('remove-todo', id)
-        },
+        // removeTodo(id) {
+        //     this.$emit('remove-todo', id)
+        // },
         removeTodo(id) {
             this.todos = this.todos.filter(t => t.id !== id)
-            this.$router.push('/todos')
+            this.saveTodos();
         },
         addTodo(todo) {
             this.todos.push(todo)
+            // this.title = ''
+            this.saveTodos();
         },
         rmNote(id) {
             this.$emit('remove-note', id)
+        },
+        saveTodos() {
+            let parsed = JSON.stringify(this.todos);
+            localStorage.setItem('todos', parsed);
         }
     }
 }

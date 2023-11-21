@@ -53,6 +53,7 @@ export default {
                     edit: false
                 }
 
+                if(!this.title) return;
                 this.$emit('add-note', newNote)
                 this.title = ''
             }
