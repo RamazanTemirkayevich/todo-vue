@@ -1,6 +1,6 @@
 <template>
     <div class="notes-todo">
-        <h2>Note</h2>
+        <h2>Note{{ note.title }}</h2>
         <!-- <div class="notes-todo-title">
             <input
                 v-if="note.edit"
@@ -38,7 +38,6 @@
             </router-link>
             <button 
                 class='btn modal-rm-btn btn--red' 
-                v-on:click="$emit('remove-note', note.id)"
             >
                 Delete
             </button>
@@ -74,6 +73,11 @@ export default {
         AddTodo,
         SvgSprite
     },
+    computed: {
+        note() {
+            return this.$store.getters.noteById(+this.$route.params.id)
+        }
+    },
     mounted() {
         if(localStorage.getItem('todos')) {
             try {
@@ -84,9 +88,6 @@ export default {
         }
     },
     methods: {
-        // removeTodo(id) {
-        //     this.$emit('remove-todo', id)
-        // },
         removeTodo(id) {
             this.todos = this.todos.filter(t => t.id !== id)
             this.saveTodos();

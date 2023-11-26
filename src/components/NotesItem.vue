@@ -5,6 +5,7 @@
             v-bind:note="note"
             v-bind:index="i"
             v-on:remove-note="rmNote"
+            :items="note"
         >
             {{ note.title }}
         </router-link>

@@ -63,7 +63,7 @@ export default {
     methods: {
         rmNote(id) {
             this.notes = this.notes.filter(t => t.id !== id)
-            this.$router.push('/todos')
+            this.$router.push('/')
         },
         addNote(note) {
             this.notes.push(note)
