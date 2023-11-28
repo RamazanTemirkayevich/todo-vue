@@ -1,7 +1,9 @@
 <template>
     <div class="notes-todo">
-        <h2>Note{{ note.title }}</h2>
-        <!-- <div class="notes-todo-title">
+        <!-- <div v-if="note">
+            <h2>{{ note.title }}</h2>
+        </div> -->
+        <div class="notes-todo-title" v-if="note">
             <input
                 v-if="note.edit"
                 v-model="note.title"
@@ -10,9 +12,10 @@
                 v-focus
             >
             <div v-else>
-                <label @click="note.edit = true;"> Name of Note </label>
+                <h2> {{ note.title }} </h2>
             </div>
-        </div> -->
+            <img @click="note.edit = true;" src="@/assets/edit-ico.svg" alt="">
+        </div>
         <AddTodo 
             :todos="todos"
             @add-todo="addTodo"
@@ -36,16 +39,16 @@
                 <img src="@/assets/logout.svg" alt="">
                 Back
             </router-link>
-            <button 
+            <!-- <button 
                 class='btn modal-rm-btn btn--red' 
             >
                 Delete
-            </button>
-            <!-- <button class="modal-rm-btn btn btn--red"
+            </button> -->
+            <button class="modal-rm-btn btn btn--red"
                 @remove-note="rmNote"
             >   
                 Delete
-            </button> -->
+            </button>
         </div>
     </div>
 </template>
@@ -64,8 +67,7 @@ export default {
     },
     data() {
         return {
-            todos: [],
-            notes: []
+            todos: []
         }
     },
     components: {
@@ -75,7 +77,7 @@ export default {
     },
     computed: {
         note() {
-            return this.$store.getters.noteById(+this.$route.params.id)
+            return this.$store.getters.note(parseInt(this.$route.params.id))
         }
     },
     mounted() {
@@ -123,6 +125,14 @@ export default {
     margin: 20px 0;
 
     font-size: 28px;
+}
+
+.notes-todo-title {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+
+    width: 100%;
 }
 
 .notes-todo-container {

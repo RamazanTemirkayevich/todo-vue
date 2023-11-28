@@ -1,11 +1,10 @@
 <template>
     <li class="notes-item">
-        <router-link to="/todos" class="notes-title"
+        <router-link :to="{ name: 'NotesPath', params: { id: note.id }}" class="notes-title"
             :key="note.id"
             v-bind:note="note"
             v-bind:index="i"
             v-on:remove-note="rmNote"
-            :items="note"
         >
             {{ note.title }}
         </router-link>
@@ -36,7 +35,7 @@ export default {
     methods: {
         rmNote(id) {
             this.$emit('remove-note', id)
-        }
+        },
     }
 }
 </script>

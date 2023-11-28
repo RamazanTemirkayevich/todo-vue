@@ -8,10 +8,9 @@ const routes = [
         component: Home
     },
     {
-        path: '/todos',
+        path: '/todos/:id',
         name: 'NotesPath',
         component: () => import('@/views/NotesPath'),
-        props: route => ({ name: route.query.name })
     }
 ]
 

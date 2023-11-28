@@ -56,7 +56,7 @@ export default {
                 if(!this.title) return;
                 this.$emit('add-note', newNote)
                 this.title = ''
-                this.$store.dispatch('createNote', newNote)
+                this.addNoteData(newNote)
             }
         },
         closeMd() {
