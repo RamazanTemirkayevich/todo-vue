@@ -56,7 +56,6 @@ export default {
                 if(!this.title) return;
                 this.$emit('add-note', newNote)
                 this.title = ''
-                this.addNoteData(newNote)
             }
         },
         closeMd() {

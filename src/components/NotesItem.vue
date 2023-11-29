@@ -1,9 +1,6 @@
 <template>
     <li class="notes-item">
-        <router-link :to="{ name: 'NotesPath', params: { id: note.id }}" class="notes-title"
-            :key="note.id"
-            v-bind:note="note"
-            v-bind:index="i"
+        <router-link :to="'/todos/' + note.id" class="notes-title"
             v-on:remove-note="rmNote"
         >
             {{ note.title }}
@@ -71,16 +68,15 @@ export default {
 }
 
 .notes-title {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
     text-align: start;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
-    
+
     width: 77%;
-    
-    word-break: break-word;
+
+    font-size: 28px;
+
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 
     font-size: 26px;
     font-weight: 500;

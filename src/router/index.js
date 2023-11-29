@@ -11,6 +11,7 @@ const routes = [
         path: '/todos/:id',
         name: 'NotesPath',
         component: () => import('@/views/NotesPath'),
+        props: true
     }
 ]
 

@@ -13,7 +13,7 @@
     > 
         <ul>
             <li>
-                <router-link to="/todos">
+                <router-link :to="'/todos/' + note.id">
                     Change
                 </router-link>
             </li>

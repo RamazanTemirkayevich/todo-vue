@@ -64,7 +64,11 @@ export default {
                 });
             } else {
                 this.editedTodoId = null;
+                this.saveTodos();
             }
+        },
+        saveTodos() {
+            this.$emit('save-todos')
         }
     },
     filters: {
