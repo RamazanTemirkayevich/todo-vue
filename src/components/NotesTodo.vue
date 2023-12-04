@@ -6,11 +6,11 @@
                 class="todo-checkbox"
                 v-on:change="todo.completed = !todo.completed"
             >
-            <div v-if="editedTodoId === todo.id">
+            <div v-if="editedTodoId === todo.idTodo">
                 <input 
                     type="text" 
                     v-model="todo.title" 
-                    :ref="`todo${todo.id}`" 
+                    :ref="`todo${todo.idTodo}`" 
                     class="todo-input" 
                 
                 />
@@ -27,12 +27,12 @@
                 >
                 {{ todo.title }}
                 </span>
-                <button class="btn btn--light" @click.prevent="toggleEdit(todo.id)">Edit</button>
+                <button class="btn btn--light" @click.prevent="toggleEdit(todo.idTodo)">Edit</button>
             </div>
         </span>
         <button 
             class="todo-btn"
-            v-on:click="$emit('remove-todo', todo.id)"
+            v-on:click="$emit('remove-todo', todo.idTodo)"
         >
             <img src="@/assets/delete-ico.svg" alt="">
         </button>
@@ -54,12 +54,12 @@ export default {
         index: Number
     },
     methods: {
-        toggleEdit(id) {
-            if (id) {
-                this.editedTodoId = id;
+        toggleEdit(idTodo) {
+            if (idTodo) {
+                this.editedTodoId = idTodo;
                 this.$nextTick(() => {
-                    if (this.$refs["field" + id]) {
-                        this.$refs["field" + id][0].focus();
+                    if (this.$refs["field" + idTodo]) {
+                        this.$refs["field" + idTodo][0].focus();
                     }
                 });
             } else {

@@ -39,10 +39,10 @@ export default {
             notes: [],
             todos: [],
             open: false,
-            classObject: {
-                active: true,
-                'text-danger': false
-            }
+            // classObject: {
+            //     active: true,
+            //     'text-danger': false
+            // }
         }
     },
     components: {

@@ -1,7 +1,7 @@
 <template>
     <li class="notes-item">
         <router-link :to="'/todos/' + note.id" class="notes-title"
-            v-on:remove-note="rmNote"
+            @remove-note="rmNote"
         >
             {{ note.title }}
         </router-link>

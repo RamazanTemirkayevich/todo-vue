@@ -9,7 +9,6 @@
     <div 
         class="settings"
         v-if="open" 
-        v-show="open"
     > 
         <ul>
             <li>
@@ -50,6 +49,7 @@
 </template>
 
 <script>
+
 export default {
     props: {
         note: {
@@ -68,11 +68,6 @@ export default {
         rmNote() {
             this.$emit('remove-note', this.note.id)
         },
-        openMd() {
-            //this.open = !this.open
-            this.open = true
-            this.$emit('open-md')
-        }
     }
 }
 </script>

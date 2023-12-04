@@ -50,7 +50,7 @@ export default {
                 const newNote = {
                     id: Date.now(),
                     title: this.title,
-                    edit: false
+                    edit: false,
                 }
 
                 if(!this.title) return;

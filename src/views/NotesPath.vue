@@ -23,6 +23,7 @@
             :todos="todos"
             @add-todo="addTodo"
             v-bind:todo="todo"
+            v-bind:index="i"
         />
         <div class="line"></div>
         <div class="notes-todo-container">
@@ -31,6 +32,7 @@
             >
                 <NotesTodo
                     v-for="(todo, i) of todos"
+                    :key="todo.idTodo"
                     v-bind:todo="todo"
                     v-bind:index="i"
                     v-on:remove-todo="removeTodo"
@@ -69,7 +71,7 @@
                             Close
                         </button>
                         <button class="modal-rm-btn btn btn--red"
-                            @click="rmNote"
+                            @remove-note="rmNote"
                         >
                             Delete
                         </button>
@@ -119,8 +121,8 @@ export default {
         }
     },
     methods: {
-        removeTodo(id) {
-            this.todos = this.todos.filter(t => t.id !== id)
+        removeTodo(idTodo) {
+            this.todos = this.todos.filter(t => t.idTodo !== idTodo)
             this.saveTodos();
         },
         addTodo(todo) {
@@ -129,7 +131,7 @@ export default {
             this.saveTodos();
         },
         rmNote() {
-            this.$emit('remove-note', this.$route.params.id)
+            this.$root.$emit('remove-note', this.$route.params.id)
         },
         saveTodos() {
             let parsed = JSON.stringify(this.todos);
