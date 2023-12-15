@@ -43,7 +43,7 @@
 		<div class="notes-todo-actions">
 			<router-link to="/" class="btn btn--light back-btn">
 				<img src="@/assets/logout.svg" alt="" />
-				Back
+				Back 
 			</router-link>
 			<!-- <button 
 						class='btn modal-rm-btn btn--red' 
