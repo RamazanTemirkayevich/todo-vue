@@ -51,6 +51,7 @@ export default {
                     id: Date.now(),
                     title: this.title,
                     edit: false,
+                    todos: []
                 }
 
                 if(!this.title) return;

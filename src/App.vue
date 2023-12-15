@@ -2,8 +2,18 @@
     <a href="/" class="logo">
         <img src="@/assets/Logo.svg" alt="">
     </a>
+
+    <delete-confirmation />
     <router-view />
 </template>
+
+<script>
+import DeleteConfirmation from "./components/shared/DeleteConfirmation.vue";
+
+export default {
+    components: { DeleteConfirmation }
+}
+</script>
 
 <style>
 #app, body {

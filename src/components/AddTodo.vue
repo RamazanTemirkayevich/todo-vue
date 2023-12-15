@@ -25,7 +25,7 @@ export default {
         onSubmitTodo() {
             if (this.title.trim()) {
                 const newTodo = {
-                    idTodo: Date.now(),
+                    id: Date.now(),
                     title: this.title,
                     completed: false,
                     edit: false

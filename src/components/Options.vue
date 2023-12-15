@@ -1,55 +1,33 @@
 <template>
-    <button 
-        class="open-modal"
-        @click="open = !open"
-    >
-        <span></span>
-    </button>
+    <div class="open-modal__wrapper" @click="openSettings" v-click-outside-element="onClicklOutside">
+        <button 
+            class="open-modal"
+        >
+            <span></span>
+        </button>
 
-    <div 
-        class="settings"
-        v-if="open" 
-    > 
-        <ul>
-            <li>
-                <router-link :to="'/todos/' + note.id">
-                    Change
-                </router-link>
-            </li>
-            <li
-                @click="opened = true"
-            >
-                Delete
-            </li>
-        </ul>
-
-        <Teleport to="body">
-            <div v-if="opened" class="modal">
-                <div class="modal-box">
-                    <p>
-                        Do you want to Delete note?
-                        <span>"{{ note.title }}"</span>
-                    </p>
-                    <div class="modal-buttons">
-                        <button class="modal-close-btn btn btn--regular"
-                            @click="opened = false"
-                        >
-                            Close
-                        </button>
-                        <button class="modal-rm-btn btn btn--red"
-                            v-on:click="$emit('remove-note', note.id)"
-                        >
-                            Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </Teleport>
+        <div 
+            v-if="isOpened"
+            ref="settingsPopup"
+            class="settings"
+        > 
+            <ul>
+                <li>
+                    <router-link :to="'/todos/' + note.id">
+                        Change
+                    </router-link>
+                </li>
+                <li
+                    @click="showConfirmation"
+                >
+                    Delete
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
 <script>
-
 export default {
     props: {
         note: {
@@ -59,15 +37,23 @@ export default {
     },
     data() {
         return {
-            open: false,
-            opened: false,
+            isOpened: false,
             rm: false
         }
     },
     methods: {
-        rmNote() {
-            this.$emit('remove-note', this.note.id)
+        showConfirmation () {
+            const { note } = this
+
+            this.$store.commit('setModalToggled', 'delete_confirmation')
+            this.$store.commit('setModalPayload', { note })
         },
+        openSettings () {
+            this.isOpened = true
+        },
+        onClicklOutside () {
+            this.isOpened = false
+        }
     }
 }
 </script>
@@ -86,6 +72,16 @@ export default {
     background: none;
     border: none;
     cursor: pointer;
+}
+
+.open-modal__wrapper {
+    margin: 0 5px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .open-modal::after,

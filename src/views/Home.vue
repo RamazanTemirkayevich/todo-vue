@@ -36,7 +36,6 @@ export default {
     name: 'app',
     data() {
         return { 
-            notes: [],
             todos: [],
             open: false,
             // classObject: {
@@ -49,15 +48,17 @@ export default {
         NotesList,
         AddModal
     },
-    mounted () {
-        this.getLocalStorage()
-    },
     watch: {
         notes: {
             handler: function (newNotes) {
-                this.setLocalStorage(newNotes)
+                this.$store.dispatch('updateNotes', newNotes)
             },
             deep: true
+        }
+    },
+    computed: {
+        notes () {
+            return this.$store.getters.notes
         }
     },
     methods: {
@@ -70,16 +71,6 @@ export default {
         },
         closeModal() {
             this.open = false
-        },
-        setLocalStorage (newNotes) {
-            localStorage.setItem('notes', JSON.stringify(newNotes))
-        },
-        getLocalStorage () {
-            const notes = JSON.parse(localStorage.getItem('notes'))
-        
-            if (notes) {
-                this.notes = notes
-            }
         }
     }
 }

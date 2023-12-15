@@ -1,144 +1,152 @@
 <template>
-    <div class="notes-todo">
-        <div class="notes-todo-title">
-            <div v-if="editNote" class="notes-todo-edit">
-                <input
-                    class="edit-field"
-                    type="text"
-                    v-model="note.title"
-                    @blur="editNote = false"
-                    @keyup.enter="editNote = false"
-                    v-focus
-                >
-                <img @click="editNote = false" class="save-ico" src="@/assets/save-ico.svg" alt="">
-            </div>
-            <div v-else class="notes-todo-edit">
-                <div>
-                    <h2> {{ note.title }} </h2>
-                </div>
-                <img @click="editNote = true;" src="@/assets/edit-ico.svg" alt="">
-            </div>
-        </div>
-        <AddTodo 
-            :todos="todos"
-            @add-todo="addTodo"
-            v-bind:todo="todo"
-            v-bind:index="i"
-        />
-        <div class="line"></div>
-        <div class="notes-todo-container">
-            <ul class="notes-todo-list"
-                @remove-todo="removeTodo"
-            >
-                <NotesTodo
-                    v-for="(todo, i) of todos"
-                    :key="todo.idTodo"
-                    v-bind:todo="todo"
-                    v-bind:index="i"
-                    v-on:remove-todo="removeTodo"
-                    @add-todo="addTodo"
-                />
-            </ul>
-        </div>
-        <div class="notes-todo-actions">
-            <router-link to="/" class="btn btn--light back-btn">
-                <img src="@/assets/logout.svg" alt="">
-                Back
-            </router-link>
-            <!-- <button 
-                class='btn modal-rm-btn btn--red' 
-            >
-                Delete
-            </button> -->
-            <button class="modal-rm-btn btn btn--red"
-                @click="opened = true"
-            >   
-                Delete
-            </button>
-        </div>
-
-        <Teleport to="body">
-            <div v-if="opened" class="modal">
-                <div class="modal-box">
-                    <p>
-                        Do you want to Delete note?
-                        <span>"{{ note.title }}"</span>
-                    </p>
-                    <div class="modal-buttons">
-                        <button class="modal-close-btn btn btn--regular"
-                            @click="opened = false"
-                        >
-                            Close
-                        </button>
-                        <button class="modal-rm-btn btn btn--red"
-                            @remove-note="rmNote"
-                        >
-                            Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </Teleport>
-    </div>
+	<div class="notes-todo">
+		<div class="notes-todo-title">
+			<div v-if="isNoteEditing" class="notes-todo-edit">
+				<input
+					class="edit-field"
+					type="text"
+					v-model="note.title"
+				/>
+				<img
+					@click="saveNoteTitle"
+					class="save-ico"
+					src="@/assets/save-ico.svg"
+				/>
+			</div>
+			<div v-else class="notes-todo-edit">
+				<div>
+					<h2>{{ note.title }}</h2>
+				</div>
+				<img @click="isNoteEditing = true" src="@/assets/edit-ico.svg" alt="" />
+			</div>
+		</div>
+		<AddTodo
+			:todos="todos"
+			@add-todo="addTodo"
+			v-bind:todo="todo"
+			v-bind:index="i"
+		/>
+		<div class="line"></div>
+		<div class="notes-todo-container">
+			<ul class="notes-todo-list" @remove-todo="removeTodo">
+				<NotesTodo
+					v-for="(todo, i) of todos"
+					:key="todo.id"
+					v-bind:todo="todo"
+					v-bind:index="i"
+					v-on:remove-todo="removeTodo"
+					@add-todo="addTodo"
+					@save-todos="saveTodos"
+				/>
+			</ul>
+		</div>
+		<div class="notes-todo-actions">
+			<router-link to="/" class="btn btn--light back-btn">
+				<img src="@/assets/logout.svg" alt="" />
+				Back
+			</router-link>
+			<!-- <button 
+						class='btn modal-rm-btn btn--red' 
+					>
+						Delete
+					</button> -->
+			<button class="modal-rm-btn btn btn--red" @click="showConfirmation">
+				Delete
+			</button>
+		</div>
+	</div>
 </template>
 
 <script>
-import NotesTodo from '@/components/NotesTodo.vue'
-import AddTodo from '@/components/AddTodo.vue'
-import { SvgSprite } from 'vue-svg-sprite'
+import NotesTodo from "@/components/NotesTodo.vue";
+import AddTodo from "@/components/AddTodo.vue";
+import { SvgSprite } from "vue-svg-sprite";
 
 export default {
-    props: {
-        note: {
-            type: Object,
-            required: true
-        }
+	data() {
+		return {
+			isNoteEditing: false,
+		};
+	},
+	components: {
+		NotesTodo,
+		AddTodo,
+		SvgSprite,
+	},
+	computed: {
+		note() {
+			return this.$store.getters.note(parseInt(this.$route.params.id));
+		},
+		notes() {
+			return this.$store.getters.notes;
+		},
+		todos() {
+			return this.note.todos
+		}
+	},
+	mounted() {
+		if (localStorage.getItem("todos")) {
+			try {
+				this.todos = JSON.parse(localStorage.getItem("todos"));
+			} catch (e) {
+				localStorage.removeItem("todos");
+			}
+		}
+	},
+	methods: {
+		removeTodo() {
+			const currentTodoCopy = { ...this.todo }
+			const currentTodosCopy = [ ...this.todos ]
+
+			const currentTodoIndex = this.todos.findIndex(todoIndexToFind => todoIndexToFind.id !== currentTodoCopy.id)
+
+			currentTodosCopy.splice(currentTodoIndex, 1)
+
+			this.$store.dispatch('updateTodos', currentTodosCopy)
+
+			// this.todos.splice(this.todos.indexOf(id), 1);
+
+			//this.todos = this.todos.filter((t) => t.id !== id);
+			this.saveTodos();
+		},
+		addTodo(todo) {
+			const currentNoteCopy = { ...this.note }
+			const currentNotesCopy = [ ...this.notes ]
+
+			currentNoteCopy.todos.push(todo)
+
+			const currentNoteIndex = this.notes.findIndex(noteIndexToFind => noteIndexToFind.id === currentNoteCopy.id)
+			
+			currentNotesCopy.splice(currentNoteIndex, 1, currentNoteCopy)
+
+			this.$store.dispatch('updateNotes', currentNotesCopy)
+		},
+		showConfirmation () {
+			const { note } = this
+
+			const modalCallback = async () => await this.$router.push('/')
+
+			this.$store.commit('setModalToggled', 'delete_confirmation')
+			this.$store.commit('setModalPayload', { note, modalCallback })
+		},
+		saveTodos() {
+			let parsed = JSON.stringify(this.todos);
+			localStorage.setItem("todos", parsed);
+			this.updateNote();
+		},
+		saveNoteTitle() {
+			this.updateNote();
+			this.isNoteEditing = false;
+		},
+		updateNote() {
+			const currentNoteCopy = { ...this.note }
+			const currentNotesCopy = [ ...this.notes ]
+			const currentNoteIndex = this.notes.findIndex(noteIndexToFind => noteIndexToFind.id === currentNoteCopy.id)
+			currentNotesCopy.splice(currentNoteIndex, 1, currentNoteCopy)
+			this.$store.dispatch('updateNotes', currentNotesCopy)
+		}
     },
-    data() {
-        return {
-            todos: [],
-            opened: false,
-            editNote: false
-        }
-    },
-    components: {
-        NotesTodo,
-        AddTodo,
-        SvgSprite
-    },
-    computed: {
-        note() {
-            return this.$store.getters.note(parseInt(this.$route.params.id))
-        }
-    },
-    mounted() {
-        if(localStorage.getItem('todos')) {
-            try {
-                this.todos = JSON.parse(localStorage.getItem('todos'));
-                } catch(e) {
-                localStorage.removeItem('todos');
-            }
-        }
-    },
-    methods: {
-        removeTodo(idTodo) {
-            this.todos = this.todos.filter(t => t.idTodo !== idTodo)
-            this.saveTodos();
-        },
-        addTodo(todo) {
-            this.todos.push(todo)
-            // this.title = ''
-            this.saveTodos();
-        },
-        rmNote() {
-            this.$root.$emit('remove-note', this.$route.params.id)
-        },
-        saveTodos() {
-            let parsed = JSON.stringify(this.todos);
-            localStorage.setItem('todos', parsed);
-        }
-    }
-}
+};
 </script>
 
 <style scoped>
@@ -165,7 +173,8 @@ export default {
     text-overflow: ellipsis;
 }
 
-.notes-todo-title, .notes-todo-edit {
+.notes-todo-title,
+.notes-todo-edit {
     display: flex;
     align-content: center;
     justify-content: space-between;
@@ -177,7 +186,8 @@ export default {
     font-size: 26px;
 }
 
-.notes-todo-edit .edit-field, .save-ico {
+.notes-todo-edit .edit-field,
+.save-ico {
     margin: 20px 0;
 }
 
@@ -196,7 +206,7 @@ export default {
 .notes-todo-container::after {
     position: absolute;
 
-    content: '';
+    content: "";
 
     left: 0;
     bottom: -1px;
@@ -204,7 +214,11 @@ export default {
     width: 100%;
     height: 43px;
 
-    background: linear-gradient(180deg, #f8f8f8 -0.32%, rgba(217, 217, 217, 0.00) 100%);
+    background: linear-gradient(
+        180deg,
+        #f8f8f8 -0.32%,
+        rgba(217, 217, 217, 0) 100%
+    );
     transform: rotate(-179.948deg);
     z-index: 10;
 }
@@ -220,7 +234,6 @@ export default {
 .notes-todo-actions .btn--red .delete-ico path {
     background-color: var(--red);
 }
-
 
 .notes-todo-list {
     display: flex;

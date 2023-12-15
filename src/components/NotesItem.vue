@@ -1,38 +1,60 @@
 <template>
     <li class="notes-item">
-        <router-link :to="'/todos/' + note.id" class="notes-title"
-            @remove-note="rmNote"
-        >
-            {{ note.title }}
-        </router-link>
-        <div 
-            class="notes-settings"
-        >
-            <Options 
-                v-bind:note="note"
-                v-on:remove-note="rmNote"
-            />
+        <div class="notes-item--title">
+            <router-link :to="'/todos/' + note.id" class="notes-title"
+                @remove-note="rmNote"
+            >
+                {{ note.title }}
+            </router-link>
+            <div 
+                class="notes-settings"
+            >
+                <Options 
+                    :note="note"
+                />
+            </div>
+        </div>
+        <div class="notes-item--todos">
+            <ul>
+                <li
+					v-for="(todo) of note.todos"
+					:key="todo.id"
+                >
+                    {{ todo.title }}
+                </li>
+            </ul>
         </div>
     </li>
 </template>
 
 <script>
 import Options from '@/components/Options.vue'
+import NotesTodo from "@/components/NotesTodo.vue";
 
 export default {
     props: {
         note: {
             type: Object,
             required: true
+        },
+        todo: {
+            type: Object,
+            required: true
         }
     },
     components: {
-        Options
+        Options,
+        NotesTodo
+    },
+    computed: {
+        todos () {
+            return this.$store.getters.todos
+        }
     },
     methods: {
         rmNote(id) {
             this.$emit('remove-note', id)
-        },
+        }
     }
 }
 </script>
@@ -40,8 +62,8 @@ export default {
 <style scoped>
 .notes-item {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
 
     padding: 15px;
 
@@ -50,6 +72,40 @@ export default {
     border-radius: var(--br--10);
     background-color: var(--white);
     box-shadow: 15px 15px 90px 0px rgba(0, 0, 0, 0.12);
+}
+
+.notes-item .notes-item--title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+.notes-item .notes-item--todos {
+    margin-top: 10px;
+    width: 95%;
+}
+
+.notes-item .notes-item--todos ul > :nth-child(n + 3) {
+    display: none;
+}
+
+.notes-item .notes-item--todos ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px;
+
+    width: 100%;
+
+    background-color: #E9EDF4;
+    border-radius: 8px;
+}
+
+.notes-item .notes-item--todos ul li {
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .notes-settings {

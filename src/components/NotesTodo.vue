@@ -1,20 +1,22 @@
 <template>
-    <li>
+    <li            
+        v-bind:class="{done: todo.completed}"
+    >
         <span>
             <input 
                 type="checkbox"
                 class="todo-checkbox"
                 v-on:change="todo.completed = !todo.completed"
             >
-            <div v-if="editedTodoId === todo.idTodo">
+            <div v-if="editedTodoId === todo.id">
                 <input 
                     type="text" 
                     v-model="todo.title" 
-                    :ref="`todo${todo.idTodo}`" 
+                    :ref="`todo${todo.id}`" 
                     class="todo-input" 
                 
                 />
-                <button class="btn btn--light" @click.prevent="toggleEdit">
+                <button class="btn btn--light" @click.prevent="toggleEdit()">
                     Save
                 </button>
             </div>
@@ -23,16 +25,20 @@
                 <strong>{{index + 1}}</strong>
                 <span 
                     class="todo-title"
-                    v-bind:class="{done: todo.completed}"
                 >
                 {{ todo.title }}
                 </span>
-                <button class="btn btn--light" @click.prevent="toggleEdit(todo.idTodo)">Edit</button>
+                <button 
+                    class="todo-btn" 
+                    @click.prevent="toggleEdit(todo.id)"
+                >
+                    <img src="@/assets/edit-ico.svg" alt="">
+                </button>
             </div>
         </span>
         <button 
             class="todo-btn"
-            v-on:click="$emit('remove-todo', todo.idTodo)"
+            v-on:click="$emit('remove-todo', todo.id)"
         >
             <img src="@/assets/delete-ico.svg" alt="">
         </button>
@@ -54,16 +60,17 @@ export default {
         index: Number
     },
     methods: {
-        toggleEdit(idTodo) {
-            if (idTodo) {
-                this.editedTodoId = idTodo;
+        toggleEdit(id) {
+            if (id) {
+                this.editedTodoId = id;
                 this.$nextTick(() => {
-                    if (this.$refs["field" + idTodo]) {
-                        this.$refs["field" + idTodo][0].focus();
+                    if (this.$refs["field" + id]) {
+                        this.$refs["field" + id][0].focus();
                     }
                 });
             } else {
                 this.editedTodoId = null;
+                console.log(this.todo.title)
                 this.saveTodos();
             }
         },
@@ -87,7 +94,6 @@ li {
     padding: 10px;
 
     background-color: var(--white);
-    box-shadow: 15px 15px 90px 0px rgba(21, 112, 239, 0.12);
     border-radius: 12px;
 }
 
@@ -140,8 +146,6 @@ span, div {
 }
 
 .done {
-    text-decoration: line-through 3px;
-
-    color: var(--black);
+    opacity: 0.6;
 }
 </style>
