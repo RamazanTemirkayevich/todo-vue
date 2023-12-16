@@ -42,7 +42,7 @@ export default {
     },
     components: {
         NotesList,
-        AddModal
+        AddModal,
     },
     watch: {
         notes: {
@@ -64,6 +64,7 @@ export default {
         },
         addNote(note) {
             this.notes.push(note)
+            //this.closeModal()
         },
         closeModal() {
             this.open = false

@@ -215,30 +215,15 @@ export default {
     position: relative;
     margin-top: 15px;
 
-    font-size: 18px;
-    font-weight: 400;
+    font-size: 20px;
+    font-weight: 500;
 
     width: 100%;
     word-wrap: break-word;
 }
 
-.modal-box p span::after {
-    position: absolute;
-
-    content: '';
-
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: 70%;
-    height: 2px;
-
-    background-color: #d3d3d3;
-    border-radius: 10px;
-}
-
 .modal-buttons {
+    margin-top: 20px;
     display: flex;
     align-items: center;
 

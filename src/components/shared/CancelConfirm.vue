@@ -13,7 +13,7 @@
                 </button>
                 <button
                     class="modal-rm-btn btn btn--red"
-                    @click="confirmDelete"
+                    @click="cancelChange"
                 >
                     Yes
                 </button>
@@ -27,6 +27,9 @@ export default {
     methods: {
         closeModal () {
             this.$emit('close-md')
+        },
+        cancelChange () {
+            this.$emit('cancel-change')
         }
     }
 }

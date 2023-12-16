@@ -6,7 +6,8 @@
             <input 
                 type="checkbox"
                 class="todo-checkbox"
-                v-on:change="todo.completed = !todo.completed"
+                v-on:change="doneTodo"
+                :value="todo.completed.value"
             >
             <div v-if="editedTodoId === todo.id">
                 <input 
@@ -16,8 +17,8 @@
                     class="todo-input" 
                 
                 />
-                <button class="btn btn--light" @click.prevent="toggleEdit()">
-                    Save
+                <button class="todo-btn" @click.prevent="toggleEdit()">
+                    <img src="@/assets/save-ico.svg" alt="">
                 </button>
             </div>
             <div v-else
@@ -76,6 +77,10 @@ export default {
         },
         saveTodos() {
             this.$emit('save-todos')
+        },
+        doneTodo() {
+            this.todo.completed = !this.todo.completed
+            this.saveTodos();
         }
     },
     filters: {

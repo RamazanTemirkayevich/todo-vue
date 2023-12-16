@@ -83,8 +83,21 @@ export default {
 }
 
 .notes-item .notes-item--todos {
+    position: relative;
     margin-top: 10px;
     width: 95%;
+}
+
+.notes-item .notes-item--todos::after {
+    position: absolute;
+    content: '';
+    left: 8px;
+    bottom: 8px;
+    width: 100.5%;
+    height: 43px;
+    background: linear-gradient(180deg, #f8f8f8 -0.42%, rgba(217, 217, 217, 0.00) 100%);
+    border-radius: var(--br--7);
+    transform: rotate(-179.948deg);
 }
 
 .notes-item .notes-item--todos ul {

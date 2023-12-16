@@ -3,21 +3,12 @@
         <input type="text" v-model="title">
         <div class="modal-buttons">
             <button type="submit" class="btn btn--regular"
-                @click="
-                    $refs.alert.showAlert(
-                        'success', // There are 4 types of alert: success, info, warning, error
-                        'Your note added to list.', // Message of the alert
-                        'Success', // Header of the alert
-                        { iconSize: 35, // Size of the icon (px)
-                        iconType: 'solid', // Icon styles: now only 2 styles 'solid' and 'regular'
-                        position: 'top left' } // Position of the alert 'top right', 'top left', 'bottom left', 'bottom right'
-                    )
-                "
+                @click="alertMessage"
             >
                 Add
             </button>
             <button class="modal-close-btn btn btn--red"
-                @click="closeMd"
+                @click="closeModal"
             >
                 Close
             </button>
@@ -57,9 +48,10 @@ export default {
                 if(!this.title) return;
                 this.$emit('add-note', newNote)
                 this.title = ''
+                //this.closeModal()
             }
         },
-        closeMd() {
+        closeModal() {
             this.$emit('close-md')
         },
         saveNote() {
@@ -67,6 +59,20 @@ export default {
             this.notes.push(this.title);
             this.title = '';
             this.$emit('save-note')
+        },
+        alertMessage() {
+            if(this.title) {
+                this.$refs.alert.showAlert(
+                    'success', // There are 4 types of alert: success, info, warning, error
+                    'Your note added to list.', // Message of the alert
+                    'Success', // Header of the alert
+                    { 
+                        iconSize: 35, // Size of the icon (px)
+                        iconType: 'solid', // Icon styles: now only 2 styles 'solid' and 'regular'
+                        position: 'top left' // Position of the alert 'top right', 'top left', 'bottom left', 'bottom right'
+                    }
+                )
+            };
         }
     }
 }

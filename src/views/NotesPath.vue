@@ -57,6 +57,7 @@
 	</div>
 	<CancelConfirm
         @close-md="closeModal"
+		@cancel-change="cancelChange"
         :notes="notes"
         v-if="open"
 	/>
@@ -100,19 +101,8 @@ export default {
 		}
 	},
 	methods: {
-		removeTodo() {
-			const currentTodoCopy = { ...this.todo }
-			const currentTodosCopy = [ ...this.todos ]
-
-			const currentTodoIndex = this.todos.findIndex(todoIndexToFind => todoIndexToFind.id !== currentTodoCopy.id)
-
-			currentTodosCopy.splice(currentTodoIndex, 1)
-
-			this.$store.dispatch('updateTodos', currentTodosCopy)
-
-			// this.todos.splice(this.todos.indexOf(id), 1);
-
-			//this.todos = this.todos.filter((t) => t.id !== id);
+		removeTodo(id) {
+			this.todos = this.todos.filter(t => t.id !== id)
 			this.saveTodos();
 		},
 		addTodo(todo) {
@@ -144,9 +134,6 @@ export default {
 			this.updateNote();
 			this.isNoteEditing = false;
 		},
-		cancelEdit() {
-			this.isNoteEditing = false;
-		},
 		updateNote() {
 			const currentNoteCopy = { ...this.note }
 			const currentNotesCopy = [ ...this.notes ]
@@ -156,7 +143,18 @@ export default {
 		},
 		closeModal() {
             this.open = false
-        }
+			// this.isNoteEditing = false;
+        },
+		cancelChange() {
+			this.isNoteEditing = false
+			this.open = false
+
+			const currentNoteCopy = { ...this.note }
+			const currentNotesCopy = [ ...this.notes ]
+			const currentNoteIndex = this.notes.findIndex(noteIndexToFind => noteIndexToFind.id !== currentNoteCopy.id)
+			currentNotesCopy.splice(currentNoteIndex, 1, currentNoteCopy)
+			this.$store.dispatch('updateNotes', currentNotesCopy)
+		},
     },
 };
 </script>
@@ -195,6 +193,7 @@ export default {
 }
 
 .notes-todo-edit .edit-field {
+	width: 100%;
     font-size: 26px;
 }
 
