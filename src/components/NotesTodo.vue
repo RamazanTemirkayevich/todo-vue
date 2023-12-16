@@ -128,6 +128,15 @@ span, div {
 }
 
 .todo-title {
+    display: block;
+
+    width: 70%;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: start;
+
     font-size: 20px;
     font-weight: 500;
 }

@@ -90,6 +90,7 @@ select:focus, textarea:focus, input:focus {
     --primary: #1570EF;
     --primary-600: #D6E7FF;;
 
+    --gray-100: #e9eaec;
     --gray-200: #BFC3CA;
     --gray-300: #F8F8F8;
     --gray-400: #A9A9A9;

@@ -1,6 +1,6 @@
 <template>
     <li class="notes-item">
-        <div class="notes-item--title">
+        <div class="notes-item--descr">
             <router-link :to="'/todos/' + note.id" class="notes-title"
                 @remove-note="rmNote"
             >
@@ -74,7 +74,7 @@ export default {
     box-shadow: 15px 15px 90px 0px rgba(0, 0, 0, 0.12);
 }
 
-.notes-item .notes-item--title {
+.notes-item .notes-item--descr {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -87,25 +87,55 @@ export default {
     width: 95%;
 }
 
-.notes-item .notes-item--todos ul > :nth-child(n + 3) {
-    display: none;
-}
-
 .notes-item .notes-item--todos ul {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 8px;
 
-    width: 100%;
+    gap: 5px;
 
-    background-color: #E9EDF4;
+    width: 94%;
+
     border-radius: 8px;
 }
 
+.notes-item .notes-item--todos ul > :nth-child(n + 3) {
+    display: none;
+}
+
 .notes-item .notes-item--todos ul li {
+    position: relative;
+
+    display: block;
+    padding: 8px 8px 8px 23px;
+
+    width: 94%;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: start;
+
+    background-color: var(--gray-100);
+    border-radius: var(--br--7);
     font-size: 18px;
     font-weight: 500;
+}
+
+.notes-item .notes-item--todos ul li::before {
+    position: absolute;
+
+    content: '';
+
+    top: 16px;
+    left: 8px;
+
+    width: 7px;
+    height: 7px;
+
+    background-color: var(--black);
+    border-radius: 50%;
 }
 
 .notes-settings {

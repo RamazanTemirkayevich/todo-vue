@@ -8,6 +8,11 @@
 					v-model="note.title"
 				/>
 				<img
+					@click="open = true"
+					class="save-ico"
+					src="@/assets/cancel-ico.svg"
+				/>
+				<img
 					@click="saveNoteTitle"
 					class="save-ico"
 					src="@/assets/save-ico.svg"
@@ -45,33 +50,34 @@
 				<img src="@/assets/logout.svg" alt="" />
 				Back  
 			</router-link>
-			<!-- <button 
-						class='btn modal-rm-btn btn--red' 
-					>
-						Delete
-					</button> -->
 			<button class="modal-rm-btn btn btn--red" @click="showConfirmation">
 				Delete
 			</button>
 		</div>
 	</div>
+	<CancelConfirm
+        @close-md="closeModal"
+        :notes="notes"
+        v-if="open"
+	/>
 </template>
 
 <script>
 import NotesTodo from "@/components/NotesTodo.vue";
 import AddTodo from "@/components/AddTodo.vue";
-import { SvgSprite } from "vue-svg-sprite";
+import CancelConfirm from "@/components/shared/CancelConfirm.vue"
 
 export default {
 	data() {
 		return {
 			isNoteEditing: false,
+			open: false
 		};
 	},
 	components: {
 		NotesTodo,
 		AddTodo,
-		SvgSprite,
+		CancelConfirm
 	},
 	computed: {
 		note() {
@@ -138,13 +144,19 @@ export default {
 			this.updateNote();
 			this.isNoteEditing = false;
 		},
+		cancelEdit() {
+			this.isNoteEditing = false;
+		},
 		updateNote() {
 			const currentNoteCopy = { ...this.note }
 			const currentNotesCopy = [ ...this.notes ]
 			const currentNoteIndex = this.notes.findIndex(noteIndexToFind => noteIndexToFind.id === currentNoteCopy.id)
 			currentNotesCopy.splice(currentNoteIndex, 1, currentNoteCopy)
 			this.$store.dispatch('updateNotes', currentNotesCopy)
-		}
+		},
+		closeModal() {
+            this.open = false
+        }
     },
 };
 </script>
@@ -176,7 +188,7 @@ export default {
 .notes-todo-title,
 .notes-todo-edit {
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: space-between;
 
     width: 100%;
@@ -189,11 +201,6 @@ export default {
 .notes-todo-edit .edit-field,
 .save-ico {
     margin: 20px 0;
-}
-
-.notes-todo-edit .save-ico {
-    width: 32px;
-    height: 32px;
 }
 
 .notes-todo-container {

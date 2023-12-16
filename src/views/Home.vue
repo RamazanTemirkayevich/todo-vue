@@ -5,8 +5,8 @@
         :notes="notes"
         v-if="open"
     />
-    <div class="notes"
-        v-bind:class="classObject"
+    <div 
+        class="notes"
     >
         <NotesList
             v-if="notes.length"
@@ -38,10 +38,6 @@ export default {
         return { 
             todos: [],
             open: false,
-            // classObject: {
-            //     active: true,
-            //     'text-danger': false
-            // }
         }
     },
     components: {
