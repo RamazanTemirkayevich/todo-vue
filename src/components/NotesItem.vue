@@ -20,7 +20,7 @@
 					v-for="(todo) of note.todos"
 					:key="todo.id"
                 >
-                    {{ todo.title }} 
+                    {{ todo.title }}
                 </li>
             </ul>
         </div>
