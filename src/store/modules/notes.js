@@ -12,10 +12,6 @@ export default {
             commit('editNote', notes)
             localStorage.setItem('notes', JSON.stringify(notes))
         },
-        updateTodos ({ commit }, todos) {
-            commit('editTodo', todos)
-            localStorage.setItem('todos', JSON.stringify(todos))
-        }
     },
     getters: {
         notes: state => {

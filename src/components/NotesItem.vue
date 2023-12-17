@@ -2,7 +2,6 @@
     <li class="notes-item">
         <div class="notes-item--descr">
             <router-link :to="'/todos/' + note.id" class="notes-title"
-                @remove-note="rmNote"
             >
                 {{ note.title }}
             </router-link>
@@ -14,16 +13,14 @@
                 />
             </div>
         </div>
-        <div class="notes-item--todos">
-            <ul>
-                <li
-					v-for="(todo) of note.todos"
-					:key="todo.id"
-                >
-                    {{ todo.title }} 
-                </li>
-            </ul>
-        </div>
+        <ul class="notes-item--todos">
+            <li
+                v-for="(todo) of note.todos"
+                :key="todo.id"
+            >
+                {{ todo.title }} 
+            </li>
+        </ul>
     </li>
 </template>
 
@@ -84,17 +81,12 @@ export default {
 
 .notes-item .notes-item--todos {
     position: relative;
-    margin-top: 10px;
-    width: 95%;
-}
 
-.notes-item .notes-item--todos ul {
-    position: relative;
+    margin-top: 10px;
 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 8px;
 
     gap: 5px;
 
@@ -103,11 +95,11 @@ export default {
     border-radius: 8px;
 }
 
-.notes-item .notes-item--todos ul > :nth-child(n + 3) {
+.notes-item .notes-item--todos > :nth-child(n + 3) {
     display: none;
 }
 
-.notes-item .notes-item--todos ul > :nth-child(1n+2)::after {
+.notes-item .notes-item--todos > :nth-child(1n+2)::after {
     position: absolute;
     content: '';
     left: 0;
@@ -119,7 +111,7 @@ export default {
     transform: rotate(-179.948deg);
 } 
 
-.notes-item .notes-item--todos ul li {
+.notes-item .notes-item--todos li {
     position: relative;
 
     display: block;
@@ -138,7 +130,7 @@ export default {
     font-weight: 500;
 }
 
-.notes-item .notes-item--todos ul li::before {
+.notes-item .notes-item--todos li::before {
     position: absolute;
 
     content: '';

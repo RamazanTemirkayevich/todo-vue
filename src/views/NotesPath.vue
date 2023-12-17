@@ -5,7 +5,7 @@
 				<input
 					class="edit-field"
 					type="text"
-					v-model="note.title"
+					v-model="noteTitle"
 				/>
 				<img
 					@click="open = true"
@@ -22,7 +22,7 @@
 				<div>
 					<h2>{{ note.title }}</h2>
 				</div>
-				<img @click="isNoteEditing = true" src="@/assets/edit-ico.svg" alt="" />
+				<img @click="startEditing" src="@/assets/edit-ico.svg" alt="" />
 			</div>
 		</div>
 		<AddTodo
@@ -33,13 +33,13 @@
 		/>
 		<div class="line"></div>
 		<div class="notes-todo-container">
-			<ul class="notes-todo-list" @remove-todo="removeTodo">
+			<ul class="notes-todo-list">
 				<NotesTodo
 					v-for="(todo, i) of todos"
 					:key="todo.id"
 					v-bind:todo="todo"
 					v-bind:index="i"
-					v-on:remove-todo="removeTodo"
+					@remove-todo="removeTodo(todo)"
 					@add-todo="addTodo"
 					@save-todos="saveTodos"
 				/>
@@ -72,7 +72,9 @@ export default {
 	data() {
 		return {
 			isNoteEditing: false,
-			open: false
+			open: false,
+			noteTitle: '',
+			originalText: ''
 		};
 	},
 	components: {
@@ -101,9 +103,23 @@ export default {
 		}
 	},
 	methods: {
-		removeTodo(id) {
-			this.todos = this.todos.filter(t => t.id !== id)
-			this.saveTodos();
+		removeTodo(todoToRemove) {
+			const currentNoteCopy = { ...this.note };
+			const currentNotesCopy = [...this.notes];
+
+			const todoIndexToRemove = currentNoteCopy.todos.findIndex(todo => todo.id === todoToRemove.id);
+
+			if (todoIndexToRemove !== -1) {
+				currentNoteCopy.todos.splice(todoIndexToRemove, 1);
+
+				const currentNoteIndex = currentNotesCopy.findIndex(note => note.id === currentNoteCopy.id);
+
+				if (currentNoteIndex !== -1) {
+					currentNotesCopy.splice(currentNoteIndex, 1, currentNoteCopy);
+
+					this.$store.dispatch('updateNotes', currentNotesCopy);
+				}
+			}
 		},
 		addTodo(todo) {
 			const currentNoteCopy = { ...this.note }
@@ -131,8 +147,9 @@ export default {
 			this.updateNote();
 		},
 		saveNoteTitle() {
-			this.updateNote();
+			this.note.title = this.noteTitle;
 			this.isNoteEditing = false;
+			this.updateNote();
 		},
 		updateNote() {
 			const currentNoteCopy = { ...this.note }
@@ -143,17 +160,16 @@ export default {
 		},
 		closeModal() {
             this.open = false
-			// this.isNoteEditing = false;
         },
+		startEditing() {
+			this.originalText = this.note.title;
+			this.noteTitle = this.note.title;
+			this.isNoteEditing = true;
+		},
 		cancelChange() {
-			this.isNoteEditing = false
 			this.open = false
-
-			const currentNoteCopy = { ...this.note }
-			const currentNotesCopy = [ ...this.notes ]
-			const currentNoteIndex = this.notes.findIndex(noteIndexToFind => noteIndexToFind.id !== currentNoteCopy.id)
-			currentNotesCopy.splice(currentNoteIndex, 1, currentNoteCopy)
-			this.$store.dispatch('updateNotes', currentNotesCopy)
+			this.noteTitle = this.originalText;
+			this.isNoteEditing = false;
 		},
     },
 };

@@ -12,15 +12,6 @@ export default {
             title: ''
         }
     },
-    mounted() {
-        if(localStorage.getItem('todos')) {
-            try {
-                this.todos = JSON.parse(localStorage.getItem('todos'));
-                } catch(e) {
-                localStorage.removeItem('todos');
-            }
-        }
-    },
     methods: {
         onSubmitTodo() {
             if (this.title.trim()) {

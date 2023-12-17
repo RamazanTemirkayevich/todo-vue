@@ -5,7 +5,6 @@
             :key="note.id"
             v-bind:note="note"
             v-bind:index="i"
-            @remove-note="rmNote"
             @add-note="addNote"
             @save-note="saveNote"
         />
