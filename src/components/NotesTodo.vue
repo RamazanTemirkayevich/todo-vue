@@ -6,8 +6,9 @@
             <input 
                 type="checkbox"
                 class="todo-checkbox"
-                v-on:change="doneTodo"
-                :value="todo.completed.value"
+				:key="todo.id"
+                v-model="todo.checked"
+                @change="doneTodo(index)"
             >
             <div v-if="editedTodoId === todo.id">
                 <input 
@@ -60,6 +61,15 @@ export default {
         },
         index: Number
     },
+    mounted() {
+        if(localStorage.getItem('checked')) {
+            try {
+                this.checkedItems = JSON.parse(localStorage.getItem('checked') || []);
+                } catch(e) {
+                localStorage.removeItem('checked');
+            }
+        }
+    },
     methods: {
         toggleEdit(id) {
             if (id) {
@@ -71,7 +81,6 @@ export default {
                 });
             } else {
                 this.editedTodoId = null;
-                console.log(this.todo.title)
                 this.saveTodos();
             }
         },
@@ -79,6 +88,7 @@ export default {
             this.$emit('save-todos')
         },
         doneTodo() {
+            localStorage.setItem('checked', JSON.stringify(this.todo.checked));
             this.todo.completed = !this.todo.completed
             this.saveTodos();
         }

@@ -88,19 +88,9 @@ export default {
     width: 95%;
 }
 
-.notes-item .notes-item--todos::after {
-    position: absolute;
-    content: '';
-    left: 8px;
-    bottom: 8px;
-    width: 100.5%;
-    height: 43px;
-    background: linear-gradient(180deg, #f8f8f8 -0.42%, rgba(217, 217, 217, 0.00) 100%);
-    border-radius: var(--br--7);
-    transform: rotate(-179.948deg);
-}
-
 .notes-item .notes-item--todos ul {
+    position: relative;
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -116,6 +106,18 @@ export default {
 .notes-item .notes-item--todos ul > :nth-child(n + 3) {
     display: none;
 }
+
+.notes-item .notes-item--todos ul > :nth-child(1n+2)::after {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    width: 100.5%;
+    height: 43px;
+    background: linear-gradient(180deg, #f8f8f8 -0.42%, rgba(217, 217, 217, 0.00) 100%);
+    border-radius: var(--br--7);
+    transform: rotate(-179.948deg);
+} 
 
 .notes-item .notes-item--todos ul li {
     position: relative;
@@ -141,7 +143,7 @@ export default {
 
     content: '';
 
-    top: 16px;
+    top: 18px;
     left: 8px;
 
     width: 7px;

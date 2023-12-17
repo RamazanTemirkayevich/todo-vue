@@ -28,7 +28,8 @@ export default {
                     id: Date.now(),
                     title: this.title,
                     completed: false,
-                    edit: false
+                    edit: false,
+                    checked: false
                 }
 
                 this.$emit('add-todo', newTodo)
