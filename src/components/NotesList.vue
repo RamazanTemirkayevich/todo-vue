@@ -46,7 +46,7 @@ export default {
     gap: 15px;
 
     padding-left: 0;
-    padding-bottom: 20px;
+    padding: 30px 0 20px;
 
     width: 100%;
     height: 420px;

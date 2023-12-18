@@ -13,14 +13,20 @@
         > 
             <ul>
                 <li>
-                    <router-link :to="'/todos/' + note.id">
-                        Change
-                    </router-link>
+                    <div>
+                        <img src="@/assets/edit-ico.svg" alt="">
+                        <router-link :to="'/todos/' + note.id">
+                            Change
+                        </router-link>
+                    </div>
                 </li>
                 <li
                     @click="showConfirmation"
                 >
-                    Delete
+                    <div>
+                        <img src="@/assets/delete-ico.svg" alt="">
+                        <span>Delete</span>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -130,19 +136,25 @@ export default {
     gap: 10px;
 }
 
-.settings ul li {
-    position: relative;
-    
-    margin-left: 0;
-    
-    padding: 12px;
 
-    font-size: 18px;
-    font-weight: 300;
+.settings ul li div {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 0;
+    padding: 12px;
     cursor: pointer;
 }
 
-.settings ul li::after {
+.settings ul li div span,
+.settings ul li div a {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--black);
+}
+
+.settings ul li div::after {
     position: absolute;
 
     content: '';
@@ -186,7 +198,7 @@ export default {
     justify-content: center;
     flex-direction: column;
 
-    width: 75%;
+    width: 70%;
 
     padding: 25px;
 
@@ -226,13 +238,25 @@ export default {
     margin-top: 20px;
     display: flex;
     align-items: center;
+    flex-direction: column;
 
     gap: 17px;
+
+    width: 100%;
 }
 
 .modal-buttons button {
     margin: unset;
 
-    padding: 26px 42px;
+    padding: 26px 30px;
+
+    width: 100%;
+}
+
+
+@media (min-width: 425px) {
+	.modal-box {
+		max-width: 368px;
+	}
 }
 </style>

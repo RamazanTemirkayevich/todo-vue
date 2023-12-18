@@ -85,6 +85,8 @@ export default {
         align-items: center;
 
         gap: 8px;
+
+        width: 100%;
     
         margin-bottom: 15px;
     }
@@ -105,10 +107,14 @@ export default {
     }
 
     .modal-buttons {
-        flex-direction: row-reverse;
+        flex-direction: column;
+
+        width: 100%;
     }
 
     .modal-buttons button {
         margin: unset;
+
+        width: 100%;
     }
 </style>

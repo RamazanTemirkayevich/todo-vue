@@ -193,7 +193,7 @@ export default {
 
     font-size: 28px;
 
-    width: 252px;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -223,7 +223,7 @@ export default {
     position: relative;
 
     width: 100%;
-    height: 340px;
+    height: 315px;
 }
 
 .notes-todo-container::after {

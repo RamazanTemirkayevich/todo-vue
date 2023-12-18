@@ -58,6 +58,7 @@ export default {
 
 <style scoped>
 .notes-item {
+    position: relative;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
@@ -67,8 +68,7 @@ export default {
     width: 90%;
 
     border-radius: var(--br--10);
-    background-color: var(--white);
-    box-shadow: 15px 15px 90px 0px rgba(0, 0, 0, 0.12);
+    background-color: var(--gray-700);
 }
 
 .notes-item .notes-item--descr {
@@ -106,7 +106,7 @@ export default {
     bottom: 0;
     width: 100.5%;
     height: 43px;
-    background: linear-gradient(180deg, #f8f8f8 -0.42%, rgba(217, 217, 217, 0.00) 100%);
+    background: linear-gradient(180deg, #ececec -0.42%, rgba(217, 217, 217, 0.00) 100%);
     border-radius: var(--br--7);
     transform: rotate(-179.948deg);
 } 
@@ -124,7 +124,7 @@ export default {
     text-overflow: ellipsis;
     text-align: start;
 
-    background-color: var(--gray-100);
+    background-color: var(--white);
     border-radius: var(--br--7);
     font-size: 18px;
     font-weight: 500;
@@ -152,7 +152,7 @@ export default {
     align-items: center;
     justify-content: center;
 
-    padding: 0 5px;
+    padding: 0 2px;
 
     height: 32px;
 

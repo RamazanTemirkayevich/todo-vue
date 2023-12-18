@@ -70,7 +70,6 @@ export default {
 
 <style>
 .notes {
-    margin-top: 25px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -82,19 +81,29 @@ export default {
     padding-top: 190px;
 }
 
-.notes::after {
+.notes::after,
+.notes::before {
     position: absolute;
 
     content: '';
 
     left: 0;
-    bottom: 44px;
 
     width: 100%;
     height: 43px;
 
     background: linear-gradient(180deg, #f8f8f8 -0.32%, rgba(217, 217, 217, 0.00) 100%);
-    transform: rotate(-179.948deg);
+    z-index: 1;
+}
+
+.notes::after {
+    bottom: 44px;
+    transform: rotate(-180deg);
+}
+
+.notes::before {
+    top: 0;
+    transform: rotate(360deg);
 }
 
 .btn {

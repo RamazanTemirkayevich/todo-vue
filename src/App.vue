@@ -70,6 +70,7 @@ input[type="text"] {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 25px auto;
     width: 128px;
 }
 
@@ -96,6 +97,7 @@ select:focus, textarea:focus, input:focus {
     --gray-400: #A9A9A9;
     --gray-500: #FCFCFD;
     --gray-600: #A3A6AB;
+    --gray-700: #ececec;
 
     --red: #F97066;
 

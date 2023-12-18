@@ -43,6 +43,8 @@ export default {
         gap: 8px;
     
         margin-bottom: 15px;
+
+        width: 100%;
     }
 
     input {
